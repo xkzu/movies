@@ -73,7 +73,12 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie getMovie() {
+    public Movie getMovie(int id) {
+        for (Movie movie: movies) {
+            if (movie.getId() == id) {
+                return movie;
+            }
+        }
         return null;
     }
 
