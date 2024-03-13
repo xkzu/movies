@@ -13,13 +13,17 @@ public class MovieServiceImpl implements MovieService {
 
     public MovieServiceImpl() {
 
+        //por temas de mantenibilidad no se debe repetir más de 5 veces un texto
+        final String SCIENCE_FICTION = "Science fiction"; //se crea constante para no imcumplir regla de sonar
+
         //Se inicializan los datos de las peliculas
         movies.add(new Movie(
                 1,
                 "Interstellar",
                 "2014",
                 "Christopher Nolan",
-                "Science fiction",
+                //se usa la constante creada para establecer el género de la pelicula
+                SCIENCE_FICTION,
                 "A group of scientists and explorers, led by Cooper, embark on a space journey to find a " +
                         "place with the necessary conditions to replace Earth and start a new life there. Earth is " +
                         "coming to an end and this group needs to find a planet beyond our galaxy that will guarantee" +
@@ -30,7 +34,7 @@ public class MovieServiceImpl implements MovieService {
                 "Inception",
                 "2010",
                 "Christopher Nolan",
-                "Science fiction",
+                SCIENCE_FICTION,
                 "Dom Cobb (Leonardo DiCaprio) is a thief with an uncanny ability to enter people's " +
                         "dreams and steal the secrets of their subconscious. His ability has made him a hot " +
                         "commodity in the world of corporate espionage, but it has come at a great cost to " +
@@ -43,7 +47,7 @@ public class MovieServiceImpl implements MovieService {
                 "Arrival",
                 "2016",
                 "Denis Villeneuve",
-                "Science fiction",
+                SCIENCE_FICTION,
                 "Twelve alien spacecraft begin arriving on our planet. The military high command asks" +
                         " for the help of an expert linguist to try to find out if the aliens come in peace" +
                         " or pose a threat. Little by little the woman will try to learn to communicate with" +
@@ -55,7 +59,7 @@ public class MovieServiceImpl implements MovieService {
                 "The Martian",
                 "2015",
                 "Ridley Scott",
-                "Science fiction",
+                SCIENCE_FICTION,
                 "A space explorer is trapped on Mars after being abandoned by his crew members, " +
                         "who thought he had died in a storm. With almost no resources and only his wits, " +
                         "he will try to survive while NASA, on the one hand, and his crew members, " +
