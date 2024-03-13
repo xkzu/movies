@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MovieService {
 
-    Movie getMovie();
+    Movie getMovie(int id);
 
     List<Movie> getMovies();
 }
