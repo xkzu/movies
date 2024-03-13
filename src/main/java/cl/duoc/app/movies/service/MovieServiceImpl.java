@@ -9,11 +9,11 @@ import java.util.List;
 @Service //se le indica a springboot que trate esta clase como un service
 public class MovieServiceImpl implements MovieService {
 
+    List<Movie> movies = new ArrayList<>();
+
     public MovieServiceImpl() {
 
         //Se inicializan los datos de las peliculas
-        List<Movie> movies = new ArrayList<>();
-
         movies.add(new Movie(
                 1,
                 "Interstellar",
@@ -79,6 +79,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> getMovies() {
-        return null;
+        return movies;
     }
 }
