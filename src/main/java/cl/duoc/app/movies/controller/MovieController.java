@@ -5,6 +5,7 @@ import cl.duoc.app.movies.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,6 +19,11 @@ public class MovieController {
     @Autowired //le damos la responsabilidad a springboot para que genere la isntancia
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
+    }
+
+    @GetMapping("/peliculas/{id}")
+    public ResponseEntity<Movie> getMovie(@PathVariable int id) {
+        return ResponseEntity.ok(movieService.getMovie(id));
     }
 
     @GetMapping("/peliculas")
