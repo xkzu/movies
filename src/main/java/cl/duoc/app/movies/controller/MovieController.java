@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController //le indicamos a springboot que maneje esta clase como RestController
 public class MovieController {
@@ -22,18 +23,13 @@ public class MovieController {
     }
 
     @GetMapping("/peliculas/{id}")
-    public ResponseEntity<Movie> getMovie(@PathVariable int id) {
+    public ResponseEntity<Optional<Movie>> getMovie(@PathVariable Long id) {
         return ResponseEntity.ok(movieService.getMovie(id));
     }
 
     @GetMapping("/peliculas")
     public ResponseEntity<List<Movie>> getMovies() {
         return ResponseEntity.ok(movieService.getMovies());
-    }
-
-    @GetMapping("/healthy") //indicamos que este metodo será mapeado como tipo Get
-    public ResponseEntity<String> getHealthy() {
-        return ResponseEntity.ok("OK");
     }
 
 }
