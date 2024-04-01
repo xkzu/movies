@@ -3,6 +3,7 @@
 # El servicio está contruido con Java 21 y Springboot 3.2.3.
 # Todas las dependencias del servicio se descargarán atutomáticamente con maven.
 # Dependencias utilizadas: Springweb, Devtools, Lombok, JPA, Oracle JDBC.
+# La información con las peliculas se encuentra en el archivo movie.csm que está ubicado en: src/main/resources/movie.scm, es importante insertar estos datos en la base de datos para obtener la información requerida a través de los endpoints. 
 # Endpoints para consumir el servicio:
 # http://localhost:8080/peliculas Devuelve una lista con todas las peliculas.
 # http://localhost:8080/peliculas/1 Devuelve una pelicula por su id.
