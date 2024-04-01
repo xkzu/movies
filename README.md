@@ -1,5 +1,11 @@
 # Primer trabajo práctico del ramo Fullstack
-# Consiste en mostrar una pelicula a través de us ID o simplemente mostrar todas las peliculas que se encuentran en memoria.
+# Consiste en mostrar una pelicula a través de us ID o simplemente mostrar todas las peliculas que se encuentran en base de datos.
+# El servicio está contruido con Java 21 y Springboot 3.2.3.
+# Todas las dependencias del servicio se descargarán atutomáticamente con maven.
+# Dependencias utilizadas: Springweb, Devtools, Lombok, JPA, Oracle JDBC.
+# Endpoints para consumir el servicio:
+# http://localhost:8080/peliculas Devuelve una lista con todas las peliculas.
+# http://localhost:8080/peliculas/1 Devuelve una pelicula por su id.
 # Peliculas que se listarán
 
 # [
