@@ -96,4 +96,41 @@ public class MovieController {
         }
     }
 
+    @PutMapping("peliculas/actualizar")
+    public ResponseEntity<Map<String, String>> updateMovie(@RequestBody Movie movie) {
+        try {
+            //se verifica si el id es null
+            if (null == movie.getId()) {
+                //en caso de ser null se lanza un badrequest
+                return ResponseEntity.badRequest().body(Map.of(
+                        "El id ingresado no puede ser null", movie.toString()));
+            }
+            //se consulta si el id ingresado existe en la bd
+            Optional<Movie> validateMovie = movieService.getMovie(movie.getId());
+            if (validateMovie.isEmpty()) {
+                //en caso de nmo existir el id se lanza un badrequest
+                return ResponseEntity.badRequest().body(Map.of(
+                        "El id de la pelicula ingresada no existe en la bd", movie.toString()));
+            }
+            //se valida que las propiedades del objeto no sean nulas ni vacias a traves de un metodo statico
+            if (MovieUtil.isEmptyOrNull(movie.getTitle())
+                    || MovieUtil.isEmptyOrNull(movie.getYear())
+                    || MovieUtil.isEmptyOrNull(movie.getDirector())
+                    || MovieUtil.isEmptyOrNull(movie.getGenre())
+                    || MovieUtil.isEmptyOrNull(movie.getSynopsis())) {
+                //en caso de que una propiedad venga null o vacia, se retorna como badrequest
+                return ResponseEntity.badRequest().body(Map.of(
+                        "title, year, director, genre y synopsis no pueden ser nulos ni vacios", movie.toString()));
+            }
+            //se actualiza pelicula en la bd
+            movieService.updateMovie(movie);
+            //se retorna con respuesta correcta
+            return ResponseEntity.ok().body(Map.of("Pelicula actualizada", movie.toString()));
+        } catch (Exception e) {
+            //se retorna con mensaje de error y la excepcion generada
+            return ResponseEntity.internalServerError().body(Map.of("Error al actualizar la pelicula", e.getMessage()));
+        }
+
+    }
+
 }
