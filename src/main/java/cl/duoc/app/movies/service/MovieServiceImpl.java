@@ -26,4 +26,9 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getMovies() {
         return repository.findAll();
     }
+
+    @Override
+    public void addMovie(Movie movie) {
+        repository.save(movie);
+    }
 }
