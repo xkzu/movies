@@ -31,4 +31,9 @@ public class MovieServiceImpl implements MovieService {
     public void addMovie(Movie movie) {
         repository.save(movie);
     }
+
+    @Override
+    public void updateMovie(Movie movie) {
+        repository.saveAndFlush(movie);
+    }
 }
