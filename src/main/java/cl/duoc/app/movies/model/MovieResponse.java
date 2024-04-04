@@ -3,7 +3,7 @@ package cl.duoc.app.movies.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Data
@@ -11,5 +11,5 @@ public class MovieResponse {
 
     private String message;
 
-    private List<Movie> movies;
+    private Optional<Movie> movie;
 }
