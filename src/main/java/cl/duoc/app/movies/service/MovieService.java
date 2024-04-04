@@ -12,4 +12,6 @@ public interface MovieService {
     List<Movie> getMovies();
 
     void addMovie(Movie movie);
+
+    void updateMovie(Movie movie);
 }
