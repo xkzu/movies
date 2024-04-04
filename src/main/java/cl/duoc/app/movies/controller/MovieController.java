@@ -2,6 +2,7 @@ package cl.duoc.app.movies.controller;
 
 import cl.duoc.app.movies.model.Movie;
 import cl.duoc.app.movies.model.MovieResponse;
+import cl.duoc.app.movies.model.MoviesResponse;
 import cl.duoc.app.movies.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,34 @@ public class MovieController {
     }
 
     @GetMapping("/peliculas/{id}")
-    public ResponseEntity<Optional<Movie>> getMovie(@PathVariable Long id) {
-        return ResponseEntity.ok(movieService.getMovie(id));
+    public ResponseEntity<Optional<MovieResponse>> getMovie(@PathVariable Long id) {
+        //se evalua si el id ingresado es menor a 1
+        if (id  < 1) {
+            //en caso de ser menor a 1 retorna un badrequest indicando que el numero debe ser mayor a cero
+            return ResponseEntity.badRequest().body(Optional.of(
+                    new MovieResponse("El id ingresado debe ser mayor a cero", null)));
+        }
+        try {
+            //se obtiene la pelicula desde la bd
+            Optional<Movie> movie = movieService.getMovie(id);
+            //se evalua si movie contiene algo
+            if (movie.isPresent()) {
+                //en caso de que movie tenga data retorna con respuesta 200 y la pelicula solicitada
+                return ResponseEntity.ok(Optional.of(
+                        new MovieResponse("Success", movie)));
+            }
+            //en caso de que no se encuentr data se retorna indicando que no hay datos en la bd
+            return ResponseEntity.ok(Optional.of(
+                    new MovieResponse("No se encontró la pelicula solicitada", movie)));
+        } catch (Exception e) {
+            //en caso de una excepcion se retorna indicando error 500 con un mensaje descriptivo
+            return ResponseEntity.internalServerError().body(Optional.of(
+                    new MovieResponse("Error al obntener la pelicula desde la bd: " + e.getMessage(), null)));
+        }
     }
 
     @GetMapping("/peliculas")
-    public ResponseEntity<List<MovieResponse>> getMovies() {
+    public ResponseEntity<List<MoviesResponse>> getMovies() {
         try {
             //se obtienen las peliculas desde la bd
             List<Movie> movies = movieService.getMovies();
@@ -38,15 +61,15 @@ public class MovieController {
             if (null != movies && !movies.isEmpty()) {
                 //se retorna la informacion correcta
                 return ResponseEntity.ok(Collections.singletonList(
-                        new MovieResponse("Success", movies)));
+                        new MoviesResponse("Success", movies)));
             }
             // se retorna indicando que no se encontraron peliculas
             return ResponseEntity.ofNullable(Collections.singletonList(
-                    new MovieResponse("No se encontraron peliculas en la bd", movies)));
+                    new MoviesResponse("No se encontraron peliculas en la bd", movies)));
         } catch (Exception e) {
             // en caso de excepcion se retorna indicando que no se pudo obtener las peliculas con el error asociado
             return (ResponseEntity.internalServerError().body(Collections.singletonList(
-                    new MovieResponse("Error al obntener pelicuas desde la bd: " + e.getMessage(), null))));
+                    new MoviesResponse("Error al obntener pelicuas desde la bd: " + e.getMessage(), null))));
         }
     }
 
