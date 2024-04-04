@@ -4,14 +4,14 @@ import cl.duoc.app.movies.model.Movie;
 import cl.duoc.app.movies.model.MovieResponse;
 import cl.duoc.app.movies.model.MoviesResponse;
 import cl.duoc.app.movies.service.MovieService;
+import cl.duoc.app.movies.util.MovieUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController //le indicamos a springboot que maneje esta clase como RestController
@@ -70,6 +70,29 @@ public class MovieController {
             // en caso de excepcion se retorna indicando que no se pudo obtener las peliculas con el error asociado
             return (ResponseEntity.internalServerError().body(Collections.singletonList(
                     new MoviesResponse("Error al obntener pelicuas desde la bd: " + e.getMessage(), null))));
+        }
+    }
+
+    @PostMapping("/peliculas/agregar")
+    public ResponseEntity<Map<String, String>> addMovie(@RequestBody Movie movie) {
+        try {
+            //se valida que las propiedades del objeto no sean nulas ni vacias a traves de un metodo statico
+            if (MovieUtil.isEmptyOrNull(movie.getTitle())
+                    || MovieUtil.isEmptyOrNull(movie.getYear())
+                    || MovieUtil.isEmptyOrNull(movie.getDirector())
+                    || MovieUtil.isEmptyOrNull(movie.getGenre())
+                    || MovieUtil.isEmptyOrNull(movie.getSynopsis())) {
+                //en caso de que una propiedad venga null o vacia, se retorna como badrequest
+                return ResponseEntity.badRequest().body(Map.of(
+                        "title, year, director, genre y synopsis no pueden ser nulos ni vacios", movie.toString()));
+            }
+            //se inserta la pelicula en la bd
+            movieService.addMovie(movie);
+            //se retorna con respuesta correcta
+            return ResponseEntity.ok().body(Map.of("Pelicula insertada", movie.toString()));
+        } catch (Exception e) {
+            //se retorna con mensaje de error y la excepcion generada
+            return ResponseEntity.internalServerError().body(Map.of("Error al insertar pelicula", e.getMessage()));
         }
     }
 
