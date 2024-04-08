@@ -96,7 +96,7 @@ public class MovieController {
         }
     }
 
-    @PutMapping("peliculas/actualizar")
+    @PutMapping("/peliculas/actualizar")
     public ResponseEntity<Map<String, String>> updateMovie(@RequestBody Movie movie) {
         try {
             //se verifica si el id es null
@@ -131,6 +131,27 @@ public class MovieController {
             return ResponseEntity.internalServerError().body(Map.of("Error al actualizar la pelicula", e.getMessage()));
         }
 
+    }
+
+    @DeleteMapping("peliculas/eliminar/{id}")
+    public ResponseEntity<Map<String, String>> deleteMovie(@PathVariable Long id) {
+        try {
+            if (null == id) {
+                return ResponseEntity.badRequest().body(Map.of(
+                        "El id ingresado no puede ser null", "null"));
+            }
+            Optional<Movie> movie = movieService.getMovie(id);
+            if (movie.isEmpty()) {
+                //en caso de no existir el id se lanza un badrequest
+                return ResponseEntity.badRequest().body(Map.of(
+                        "El id de la pelicula ingresada no existe en la bd", movie.toString()));
+            }
+            movieService.deleteMovie(id);
+            return ResponseEntity.ok().body(Map.of("Pelicula eliminada", movie.toString()));
+        } catch (Exception e) {
+            //se retorna con mensaje de error y la excepcion generada
+            return ResponseEntity.internalServerError().body(Map.of("Error al actualizar la pelicula", e.getMessage()));
+        }
     }
 
 }
