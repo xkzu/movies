@@ -36,4 +36,9 @@ public class MovieServiceImpl implements MovieService {
     public void updateMovie(Movie movie) {
         repository.saveAndFlush(movie);
     }
+
+    @Override
+    public void deleteMovie(Long id) {
+        repository.deleteById(id);
+    }
 }
