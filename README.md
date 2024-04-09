@@ -5,8 +5,26 @@
 # Dependencias utilizadas: Springweb, Devtools, Lombok, JPA, Oracle JDBC.
 # La información con las peliculas se encuentra en el archivo movie.csm que está ubicado en: src/main/resources/movie.scm, es importante insertar estos datos en la base de datos para obtener la información requerida a través de los endpoints. 
 # Endpoints para consumir el servicio:
-# http://localhost:8080/peliculas Devuelve una lista con todas las peliculas.
-# http://localhost:8080/peliculas/1 Devuelve una pelicula por su id.
+# http://localhost:8080/peliculas Método GET que devuelve una lista con todas las peliculas.
+# http://localhost:8080/peliculas/1 Método GET que devuelve una pelicula por su id.
+# http://localhost:8080/peliculas/agregar Método POST que crea una nueva pelicula en bd
+# Json para crear una pelicula {
+    "title": "Nombre pelicula",
+    "year": "año",
+    "director": "director",
+    "genre": "genero",
+    "synopsis": "trama"
+# }
+# http://localhost:8080/peliculas/actualizar Método PUT que actualiza una pelicula
+# Json para actualizar una pelicula {
+    "id": 1,
+    "title": "Nombre pelicula",
+    "year": "año",
+    "director": "director",
+    "genre": "genero",
+    "synopsis": "trama"
+# }
+# http://localhost:8080/peliculas/eliminar/1 Método DELETE para eliminar una pelicula por id
 # Peliculas que se listarán
 
 # [
